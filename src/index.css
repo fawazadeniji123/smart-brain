@@ -1,0 +1,31 @@
+*,
+*::before,
+*::after {
+  padding: 0;
+  margin: 0;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 15px;
+}
+
+body {
+  background: linear-gradient(
+    89deg,
+    /* rgb(0, 119, 255) 0%, */
+    /* rgb(0, 238, 255) 100% */
+    rgb(6, 83, 226) 0%,
+    #04c8de 100%
+  );
+}
+
+button {
+  cursor: pointer;
+}
+
+#tsparticles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+}
