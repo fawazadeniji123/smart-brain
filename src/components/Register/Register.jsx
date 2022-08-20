@@ -3,12 +3,49 @@ import { useAuth } from '../../utils/auth'
 import { useNavigate } from 'react-router-dom'
 
 const Register = () => {
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
+
   const { login } = useAuth()
   const navigate = useNavigate()
 
   const handleRegister = () => {
-    login()
-    navigate('/', { replace: true })
+    if (!name && !email && !password) {
+      return setError('Please enter a name, email and password')
+    }
+
+    fetch('http://localhost:3000/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name,
+        email,
+        password,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.response === 'success') {
+          login(data.user)
+          setError('')
+          navigate('/', { replace: true })
+        }
+      })
+  }
+
+  const handleNameChange = (e) => {
+    setName(e.target.value)
+  }
+
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value)
+  }
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value)
   }
 
   return (
@@ -27,6 +64,8 @@ const Register = () => {
                 type="text"
                 name="name"
                 id="name"
+                value={name}
+                onChange={handleNameChange}
               />
             </div>
             <div className="mv3">
@@ -39,6 +78,8 @@ const Register = () => {
                 type="email"
                 name="email-address"
                 id="email-address"
+                value={email}
+                onChange={handleEmailChange}
               />
             </div>
             <div className="mv3">
@@ -51,6 +92,8 @@ const Register = () => {
                 type="password"
                 name="password"
                 id="password"
+                value={password}
+                onChange={handlePasswordChange}
               />
             </div>
           </fieldset>
@@ -62,6 +105,7 @@ const Register = () => {
               onClick={handleRegister}
             />
           </div>
+          {error && <div className="lh-copy mt3 red">{error}</div>}
         </div>
       </div>
     </section>

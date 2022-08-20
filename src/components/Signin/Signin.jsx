@@ -29,6 +29,7 @@ const Signin = () => {
       .then((data) => {
         if (data.response === 'success') {
           login(data.user)
+          setError('')
           navigate('/', { replace: true })
         } else {
           setError('Invalid email or password')
@@ -86,7 +87,7 @@ const Signin = () => {
               onClick={handleSignin}
             />
           </div>
-          <div className="lh-copy mt3 red">{error}</div>
+          {error && <div className="lh-copy mt3 red">{error}</div>}
           <div className="lh-copy mt3">
             <a
               href="#0"
