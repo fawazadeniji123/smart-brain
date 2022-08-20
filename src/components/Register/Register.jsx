@@ -7,6 +7,7 @@ const Register = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
+  const [passwordVisibility, setPasswordVisibility] = useState('password')
 
   const { login } = useAuth()
   const navigate = useNavigate()
@@ -48,8 +49,15 @@ const Register = () => {
   const handleEmailChange = (e) => {
     setEmail(e.target.value)
   }
+
   const handlePasswordChange = (e) => {
     setPassword(e.target.value)
+  }
+
+  const togglePasswordVisibility = () => {
+    setPasswordVisibility(
+      passwordVisibility === 'password' ? 'text' : 'password',
+    )
   }
 
   return (
@@ -93,12 +101,21 @@ const Register = () => {
               <input
                 required
                 className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100"
-                type="password"
+                type={passwordVisibility}
                 name="password"
                 id="password"
                 value={password}
                 onChange={handlePasswordChange}
               />
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                name="checkbox"
+                id="checkbox"
+                onClick={togglePasswordVisibility}
+              />
+              <label className="pa2" htmlFor='checkbox'>Show Password</label>
             </div>
           </fieldset>
           <div className="">
