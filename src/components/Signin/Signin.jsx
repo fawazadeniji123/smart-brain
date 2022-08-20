@@ -1,15 +1,48 @@
 import { useAuth } from '../../utils/auth'
 import { useNavigate } from 'react-router-dom'
+import { useState } from 'react'
 
 const Signin = () => {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
+
   const { login } = useAuth()
   const navigate = useNavigate()
 
   const handleSignin = () => {
-    login()
-    navigate('/', { replace: true })
+    if (!email && !password) {
+      return setError('Please enter an email and password')
+    }
+
+    fetch('http://localhost:3000/signin', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.response === 'success') {
+          login(data.user)
+          navigate('/', { replace: true })
+        } else {
+          setError('Invalid email or password')
+        }
+      })
   }
-  
+
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value)
+  }
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value)
+  }
+
   return (
     <section className="br3 ba b--black-10 mv4 w-100 w-50-m w-25-l mw6 tc shadow-5 center">
       <div className="pa4 black-80">
@@ -26,6 +59,8 @@ const Signin = () => {
                 type="email"
                 name="email-address"
                 id="email-address"
+                value={email}
+                onChange={handleEmailChange}
               />
             </div>
             <div className="mv3">
@@ -38,6 +73,8 @@ const Signin = () => {
                 type="password"
                 name="password"
                 id="password"
+                value={password}
+                onChange={handlePasswordChange}
               />
             </div>
           </fieldset>
@@ -49,6 +86,7 @@ const Signin = () => {
               onClick={handleSignin}
             />
           </div>
+          <div className="lh-copy mt3 red">{error}</div>
           <div className="lh-copy mt3">
             <a
               href="#0"
