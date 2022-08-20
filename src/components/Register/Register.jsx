@@ -16,6 +16,10 @@ const Register = () => {
       return setError('Please enter a name, email and password')
     }
 
+    if (password.length < 6) {
+      return setError('Password must be at least 6 characters')
+    }
+
     fetch('http://localhost:3000/register', {
       method: 'POST',
       headers: {
