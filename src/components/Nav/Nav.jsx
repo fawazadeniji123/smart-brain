@@ -13,7 +13,7 @@ const Nav = () => {
     return (
       <nav className="primary-nav">
         <NavLink
-          className="f3 link dim black underline pa3 pointer"
+          className="f3 link dim black underline pa3 pointer active"
           to={'/signin'}
           onClick={handleSignout}
         >
