@@ -2,13 +2,20 @@ import { createContext, useContext, useState } from 'react'
 
 const AuthContext = createContext()
 
+const initialUser = {
+  name: '',
+  email: '',
+  entries: 0,
+  joined: '',
+}
+
 export const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState(false)
-  const [user, setUser] = useState({})
+  const [user, setUser] = useState(initialUser)
 
-  const login = (userData) => {
+  const login = ({ name, email, entries, joined }) => {
     setAuth(true)
-    setUser(userData)
+    setUser({ name, email, entries, joined })
   }
 
   const logout = () => {
