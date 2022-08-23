@@ -2,12 +2,12 @@ import React from 'react';
 
 const NoMatch = () => {
   return (
-    <section>
+    <section className='tc mt6 f2'>
       <span
+        className='f1'
         style={{
           fontFamily: 'monospace',
-          fontWeight: '800',
-          fontSize: '20px',
+          fontWeight: 'bold'
         }}
       >
         404

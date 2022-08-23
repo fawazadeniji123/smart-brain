@@ -8,6 +8,7 @@ metadata.set('authorization', 'Key 99edfc172f024dd18e90e69151214e8a')
 const input =
   'https://media.suara.com/pictures/653x366/2019/03/03/83829-sylvester-stallone-memerankan-rambo-instagram.jpg'
 
+  // https://i.ibb.co/89D47N3/christina-wocintechchat-com-gl-Rqy-WJg-Ue-Y-unsplash.jpg
 stub.PostModelOutputs(
   {
     // This is the model ID of a publicly available General model. You may use any other public or custom model ID.

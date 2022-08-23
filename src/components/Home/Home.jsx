@@ -3,6 +3,7 @@ import Logo from '../Logo/Logo'
 import Rank from '../Rank/Rank'
 import ImageLinkForm from '../ImageLinkForm/ImageLinkForm'
 import FaceRecognition from '../FaceRecognition/FaceRecognition'
+import { useAuth } from '../../utils/auth'
 
 const boundingBox = {
   top_row: 0,
@@ -15,6 +16,7 @@ const Home = () => {
   const [input, setInput] = useState('')
   const [imageUrl, setImageUrl] = useState('')
   const [box, setBox] = useState(boundingBox)
+  const { user, setUser } = useAuth()
 
   const response = {
     outputs: [
@@ -60,11 +62,26 @@ const Home = () => {
   }
 
   const handleImgLoad = () => {
+    fetch('http://localhost:3000/image', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ id: user.id }),
+    })
+      .then((res) => res.json())
+      .then(({ response, user }) => {
+        if (response === 'success') {
+          setUser(user)
+        }
+      })
     displayFaceBox(calculateFaceLocation(response))
   }
 
   const handleClick = (input) => {
-    setImageUrl(input)
+    if (input) {
+      setImageUrl(input)
+    }
   }
 
   return (

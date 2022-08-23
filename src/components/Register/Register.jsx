@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useAuth } from '../../utils/auth'
 import { useNavigate } from 'react-router-dom'
 
-const Register = () => {
+const Register = ({ handleKeyPress }) => {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -33,11 +33,16 @@ const Register = () => {
       }),
     })
       .then((res) => res.json())
-      .then((data) => {
-        if (data.response === 'success') {
-          login(data.user)
+      .then(({ response, user }) => {
+        if (response === 'success') {
+          login(user)
           setError('')
           navigate('/', { replace: true })
+        } else {
+          setError(response)
+          setEmail('')
+          setName('')
+          setPassword('')
         }
       })
   }
@@ -94,7 +99,7 @@ const Register = () => {
                 onChange={handleEmailChange}
               />
             </div>
-            <div className="mv3">
+            <div className="mv3" onKeyUp={handleKeyPress(handleRegister)}>
               <label className="db fw6 lh-copy f6" htmlFor="password">
                 Password
               </label>
@@ -115,7 +120,9 @@ const Register = () => {
                 id="checkbox"
                 onClick={togglePasswordVisibility}
               />
-              <label className="pa2" htmlFor='checkbox'>Show Password</label>
+              <label className="pa2" htmlFor="checkbox">
+                Show Password
+              </label>
             </div>
           </fieldset>
           <div className="">

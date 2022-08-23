@@ -71,6 +71,14 @@ const App = () => {
     await loadFull(engine)
   }, [])
 
+  const handleKeyPress =
+    (func) =>
+    ({ key }) => {
+      if (key === 'Enter') {
+        func()
+      }
+    }
+
   return (
     <AuthProvider>
       <Router>
@@ -89,8 +97,14 @@ const App = () => {
               </RequireAuth>
             }
           />
-          <Route path="/signin" element={<Signin />} />
-          <Route path="/register" element={<Register />} />
+          <Route
+            path="/signin"
+            element={<Signin handleKeyPress={handleKeyPress} />}
+          />
+          <Route
+            path="/register"
+            element={<Register handleKeyPress={handleKeyPress} />}
+          />
           <Route path="*" element={<NoMatch />} />
         </Routes>
       </Router>

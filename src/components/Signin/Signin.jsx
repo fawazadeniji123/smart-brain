@@ -2,7 +2,7 @@ import { useAuth } from '../../utils/auth'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 
-const Signin = () => {
+const Signin = ({ handleKeyPress }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
@@ -12,7 +12,7 @@ const Signin = () => {
   const navigate = useNavigate()
 
   const handleSignin = () => {
-    if (!email && !password) {
+    if (!email || !password) {
       return setError('Please enter an email and password')
     }
 
@@ -27,13 +27,14 @@ const Signin = () => {
       }),
     })
       .then((res) => res.json())
-      .then((data) => {
-        if (data.response === 'success') {
-          login(data.user)
+      .then(({ response, user }) => {
+        if (response === 'success') {
+          login(user)
           setError('')
           navigate('/', { replace: true })
         } else {
-          setError('Invalid email or password')
+          setError(response)
+          setPassword('')
         }
       })
   }
@@ -72,7 +73,7 @@ const Signin = () => {
                 onChange={handleEmailChange}
               />
             </div>
-            <div className="mv3">
+            <div className="mv3" onKeyUp={handleKeyPress(handleSignin)}>
               <label className="db fw6 lh-copy f6" htmlFor="password">
                 Password
               </label>

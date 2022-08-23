@@ -5,7 +5,9 @@ const Rank = () => {
 
   return (
     <div className="tc">
-      <div className="white f3">{`${user.name[0].toUpperCase()}${user.name.slice(1)}, your current rank is...`}</div>
+      <div className="white f3">{`${user.user_name[0].toUpperCase()}${user.user_name
+        .slice(1)
+        .trim()}, your current entry count is...`}</div>
       <div className="white f1">{`#${user.entries}`}</div>
     </div>
   )
