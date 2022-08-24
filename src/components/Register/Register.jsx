@@ -45,6 +45,7 @@ const Register = ({ handleKeyPress }) => {
           setPassword('')
         }
       })
+      .catch((err) => setError('Unable to Register'))
   }
 
   const handleNameChange = (e) => {

@@ -12,7 +12,7 @@ const boundingBox = {
   right_col: 0,
 }
 
-const Home = () => {
+const Home = ({ handleKeyPress }) => {
   const [input, setInput] = useState('')
   const [imageUrl, setImageUrl] = useState('')
   const [box, setBox] = useState(boundingBox)
@@ -70,12 +70,13 @@ const Home = () => {
       body: JSON.stringify({ id: user.id }),
     })
       .then((res) => res.json())
-      .then(({ response, user }) => {
+      .then(({ response, user, prediction }) => {
         if (response === 'success') {
           setUser(user)
+          displayFaceBox(calculateFaceLocation(prediction))
         }
       })
-    displayFaceBox(calculateFaceLocation(response))
+      .catch((err) => console.log(err))
   }
 
   const handleClick = (input) => {
@@ -91,6 +92,7 @@ const Home = () => {
       <ImageLinkForm
         handleInput={handleInput}
         handleClick={handleClick}
+        handleKeyPress={handleKeyPress}
         input={input}
       />
       <FaceRecognition

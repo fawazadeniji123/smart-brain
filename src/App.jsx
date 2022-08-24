@@ -93,7 +93,7 @@ const App = () => {
             path="/"
             element={
               <RequireAuth>
-                <Home />
+                <Home handleKeyPress={handleKeyPress} />
               </RequireAuth>
             }
           />

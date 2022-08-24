@@ -1,8 +1,8 @@
 import './ImageLinkForm.css'
 
-const ImageLinkForm = ({ input, handleInput, handleClick }) => {
+const ImageLinkForm = ({ input, handleInput, handleClick, handleKeyPress }) => {
   return (
-    <section>
+    <section onKeyUp={handleKeyPress(() => handleClick(input))}>
       <p className="f3 tc mb2">
         {'This Magic Brain will detect faces in your pictures. Give it a try'}
       </p>
@@ -11,6 +11,7 @@ const ImageLinkForm = ({ input, handleInput, handleClick }) => {
           <input
             type="text"
             value={input}
+            placeholder='Enter link to image...'
             className="f4 pa2 w-70 center"
             onInput={handleInput}
           />

@@ -37,6 +37,7 @@ const Signin = ({ handleKeyPress }) => {
           setPassword('')
         }
       })
+      .catch((err) => setError('Unable to sign in'))
   }
 
   const handleEmailChange = (e) => {
