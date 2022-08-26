@@ -21,7 +21,7 @@ const Register = ({ handleKeyPress }) => {
       return setError('Password must be at least 6 characters')
     }
 
-    fetch('http://localhost:3000/register', {
+    fetch('https://api-smart-face-recognition.herokuapp.com/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

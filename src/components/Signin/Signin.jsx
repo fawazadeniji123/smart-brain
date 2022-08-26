@@ -16,7 +16,7 @@ const Signin = ({ handleKeyPress }) => {
       return setError('Please enter an email and password')
     }
 
-    fetch('http://localhost:3000/signin', {
+    fetch('https://api-smart-face-recognition.herokuapp.com/signin', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

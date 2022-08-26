@@ -40,7 +40,7 @@ const Home = ({ handleKeyPress }) => {
   }
 
   const handleImgLoad = () => {
-    fetch('http://localhost:3000/image', {
+    fetch('https://api-smart-face-recognition.herokuapp.com/image', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
