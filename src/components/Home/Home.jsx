@@ -5,56 +5,34 @@ import ImageLinkForm from '../ImageLinkForm/ImageLinkForm'
 import FaceRecognition from '../FaceRecognition/FaceRecognition'
 import { useAuth } from '../../utils/auth'
 
-const boundingBox = {
-  top_row: 0,
-  left_col: 0,
-  bottom_row: 0,
-  right_col: 0,
-}
-
 const Home = ({ handleKeyPress }) => {
   const [input, setInput] = useState('')
   const [imageUrl, setImageUrl] = useState('')
-  const [box, setBox] = useState(boundingBox)
+  const [boxes, setBoxes] = useState([])
   const { user, setUser } = useAuth()
 
-  const response = {
-    outputs: [
-      {
-        data: {
-          regions: [
-            {
-              region_info: {
-                bounding_box: {
-                  top_row: 0.10391797870397568,
-                  left_col: 0.5252706408500671,
-                  bottom_row: 0.3723624050617218,
-                  right_col: 0.6431418657302856,
-                },
-              },
-            },
-          ],
-        },
-      },
-    ],
-  }
-
   const calculateFaceLocation = (data) => {
-    const { top_row, left_col, right_col, bottom_row } =
-      data.outputs[0].data.regions[0].region_info.bounding_box
     const image = document.querySelector('#inputimage')
     const width = Number(image.width)
     const height = Number(image.height)
-    return {
-      left: left_col * width,
-      top: top_row * height,
-      right: width - right_col * width,
-      bottom: height - bottom_row * height,
+
+    const regions = data.outputs[0].data.regions
+    const boxes = []
+    for (const region of regions) {
+      const { top_row, left_col, right_col, bottom_row } =
+        region.region_info.bounding_box
+      boxes.push({
+        left: left_col * width,
+        top: top_row * height,
+        right: width - right_col * width,
+        bottom: height - bottom_row * height,
+      })
     }
+    return boxes
   }
 
-  const displayFaceBox = (box) => {
-    setBox(box)
+  const displayFaceBox = (boxes) => {
+    setBoxes(boxes)
   }
 
   const handleInput = (event) => {
@@ -67,13 +45,15 @@ const Home = ({ handleKeyPress }) => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ id: user.id }),
+      body: JSON.stringify({ id: user.id, inputUrl: imageUrl }),
     })
       .then((res) => res.json())
       .then(({ response, user, prediction }) => {
         if (response === 'success') {
           setUser(user)
           displayFaceBox(calculateFaceLocation(prediction))
+        } else {
+          console.log(response)
         }
       })
       .catch((err) => console.log(err))
@@ -81,6 +61,7 @@ const Home = ({ handleKeyPress }) => {
 
   const handleClick = (input) => {
     if (input) {
+      setBoxes([])
       setImageUrl(input)
     }
   }
@@ -97,7 +78,7 @@ const Home = ({ handleKeyPress }) => {
       />
       <FaceRecognition
         handleImgLoad={handleImgLoad}
-        box={box}
+        boxes={boxes}
         imageUrl={imageUrl}
       />
     </main>

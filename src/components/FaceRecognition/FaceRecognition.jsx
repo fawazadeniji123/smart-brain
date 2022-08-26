@@ -1,6 +1,6 @@
 import './FaceRecognition.css'
 
-const FaceRecognition = ({ box, imageUrl, handleImgLoad }) => {
+const FaceRecognition = ({ boxes, imageUrl, handleImgLoad }) => {
   return (
     <section className="center ma">
       <div className="absolute mt2">
@@ -12,7 +12,9 @@ const FaceRecognition = ({ box, imageUrl, handleImgLoad }) => {
           height="auto"
           onLoad={handleImgLoad}
         />
-        <div className="bounding-box" style={box}></div>
+        {boxes.map((box, i) => (
+          <div className="bounding-box" key={i} style={box}></div>
+        ))}
       </div>
     </section>
   )

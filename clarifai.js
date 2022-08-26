@@ -5,8 +5,16 @@ const stub = ClarifaiStub.grpc()
 const metadata = new grpc.Metadata()
 metadata.set('authorization', 'Key 99edfc172f024dd18e90e69151214e8a')
 
-const input =
-  'https://media.suara.com/pictures/653x366/2019/03/03/83829-sylvester-stallone-memerankan-rambo-instagram.jpg'
+/* 
+  https://i.ibb.co/9ckJpX6/images-3.jpg
+  https://i.ibb.co/3Rv8kpP/images-2.jpg
+  https://i.ibb.co/qxjScKw/images-1.jpg
+  https://i.ibb.co/YPCqXCB/images.jpg
+  https://i.ibb.co/G5QyY6R/photo-1554151228-14d9def656e4.jpg
+  https://i.ibb.co/YktS5Mf/BDgsok-Lv9kpxc5-Aw-Jwtexn.jpg
+  https://i.ibb.co/t28npyR/Face-Mapping-191d3a2073e146d981c1626b39e8a227.png 
+*/
+  // 'https://media.suara.com/pictures/653x366/2019/03/03/83829-sylvester-stallone-memerankan-rambo-instagram.jpg'
 
   // https://i.ibb.co/89D47N3/christina-wocintechchat-com-gl-Rqy-WJg-Ue-Y-unsplash.jpg
 stub.PostModelOutputs(
