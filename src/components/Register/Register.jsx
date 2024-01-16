@@ -21,7 +21,7 @@ const Register = ({ handleKeyPress }) => {
       return setError('Password must be at least 6 characters')
     }
 
-    fetch('https://api-smart-face-recognition.herokuapp.com/register', {
+    fetch('https://smart-brain-api-0v4q.onrender.com/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
