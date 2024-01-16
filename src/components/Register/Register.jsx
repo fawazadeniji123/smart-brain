@@ -34,6 +34,7 @@ const Register = ({ handleKeyPress }) => {
     })
       .then((res) => res.json())
       .then(({ response, user }) => {
+        console.log(response, user)
         if (response === 'success') {
           login(user)
           setError('')
