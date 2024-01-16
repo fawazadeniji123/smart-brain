@@ -16,7 +16,7 @@ const Signin = ({ handleKeyPress }) => {
       return setError('Please enter an email and password')
     }
 
-    fetch('https://api-smart-face-recognition.herokuapp.com/signin', {
+    fetch('https://smart-brain-api-0v4q.onrender.com/signin', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
