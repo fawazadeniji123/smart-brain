@@ -40,7 +40,7 @@ const Home = ({ handleKeyPress }) => {
   }
 
   const handleImgLoad = () => {
-    fetch('https://smart-brain-api-0v4q.onrender.com/image', {
+    fetch(import.meta.env.VITE_API_URL + '/image', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

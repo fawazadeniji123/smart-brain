@@ -21,7 +21,7 @@ const Register = ({ handleKeyPress }) => {
       return setError('Password must be at least 6 characters')
     }
 
-    fetch('https://smart-brain-api-0v4q.onrender.com/register', {
+    fetch(import.meta.env.VITE_API_URL + '/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
