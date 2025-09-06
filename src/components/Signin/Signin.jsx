@@ -7,6 +7,7 @@ const Signin = ({ handleKeyPress }) => {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [passwordVisibility, setPasswordVisibility] = useState('password')
+  const [loading, setLoading] = useState(false)
 
   const { login } = useAuth()
   const navigate = useNavigate()
@@ -15,6 +16,9 @@ const Signin = ({ handleKeyPress }) => {
     if (!email || !password) {
       return setError('Please enter an email and password')
     }
+
+    setLoading(true)
+    setError('')
 
     fetch(import.meta.env.VITE_API_URL + '/signin', {
       method: 'POST',
@@ -30,7 +34,6 @@ const Signin = ({ handleKeyPress }) => {
       .then(({ response, user }) => {
         if (response === 'success') {
           login(user)
-          setError('')
           navigate('/', { replace: true })
         } else {
           setError(response)
@@ -38,6 +41,7 @@ const Signin = ({ handleKeyPress }) => {
         }
       })
       .catch((err) => setError('Unable to sign in'))
+      .finally(() => setLoading(false))
   }
 
   const handleEmailChange = (e) => {
@@ -101,12 +105,14 @@ const Signin = ({ handleKeyPress }) => {
             </div>
           </fieldset>
           <div className="">
-            <input
+            <button
               className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
               type="submit"
-              value="Sign in"
+              disabled={loading}
               onClick={handleSignin}
-            />
+            >
+              {loading ? 'Signing in...' : 'Sign in'}
+            </button>
           </div>
           {error && <div className="lh-copy mt3 red">{error}</div>}
           <div className="lh-copy mt3">

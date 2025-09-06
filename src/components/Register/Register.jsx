@@ -8,6 +8,7 @@ const Register = ({ handleKeyPress }) => {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [passwordVisibility, setPasswordVisibility] = useState('password')
+  const [loading, setLoading] = useState(false)
 
   const { login } = useAuth()
   const navigate = useNavigate()
@@ -20,6 +21,9 @@ const Register = ({ handleKeyPress }) => {
     if (password.length < 6) {
       return setError('Password must be at least 6 characters')
     }
+
+    setLoading(true)
+    setError('')
 
     fetch(import.meta.env.VITE_API_URL + '/register', {
       method: 'POST',
@@ -37,7 +41,6 @@ const Register = ({ handleKeyPress }) => {
         console.log(response, user)
         if (response === 'success') {
           login(user)
-          setError('')
           navigate('/', { replace: true })
         } else {
           setError(response)
@@ -47,6 +50,7 @@ const Register = ({ handleKeyPress }) => {
         }
       })
       .catch((err) => setError('Unable to Register'))
+      .finally(() => setLoading(false))
   }
 
   const handleNameChange = (e) => {
@@ -128,12 +132,14 @@ const Register = ({ handleKeyPress }) => {
             </div>
           </fieldset>
           <div className="">
-            <input
+            <button
               className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
               type="submit"
-              value="Register"
+              disabled={loading}
               onClick={handleRegister}
-            />
+            >
+              {loading ? 'Registering...' : 'Register'}
+            </button>
           </div>
           {error && <div className="lh-copy mt3 red">{error}</div>}
         </div>
