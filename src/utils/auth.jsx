@@ -4,7 +4,7 @@ const AuthContext = createContext()
 
 const initialUser = {
   id: '',
-  name: '',
+  user_name: '',
   email: '',
   entries: 0,
   joined: '',
